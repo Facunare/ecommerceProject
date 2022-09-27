@@ -1,9 +1,12 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
     <title>Pagina</title>
 </head>
 <body>
@@ -12,16 +15,20 @@
             <li><a href="/">Inicio</a></li>
 
             
-            
+            {% if user.is_staff %}
+                <li><a href="{% url 'addStock' %}">Agregar producto</a></li>
+            {% endif %}
+            <li><a href="{% url 'buy' %}">Comprar</a></li>
             {% if user.is_authenticated %}
                 <li><a href="{% url 'logout' %}">Cerrar sesion</a></li>
             {% else %}
                 <li><a href="{% url 'signup' %}">Registrarse</a></li>
                 <li><a href="{% url 'signin' %}">Iniciar Sesión</a></li>
             {% endif %}
-            {% if user.is_staff %}
-                <li><a href="{% url 'addStock' %}">Agregar producto</a></li>
-            {% endif %}
+
+            
+            
+            
         </ul>
     </nav>
     {% block content %}

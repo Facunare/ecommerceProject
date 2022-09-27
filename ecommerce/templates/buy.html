@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% for product in products %}
+<form action="" method="POST">
+    {% csrf_token %}
+    <p>{{product}}</p>
+    <button>
+        Comprar
+    </button>
+</form>
+    
+
+{% endfor %}
+{% endblock %}
