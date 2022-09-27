@@ -7,25 +7,29 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
     <title>Pagina</title>
 </head>
 <body>
     <nav>
+        <input type="search" name="buscar" id="buscar" placeholder="Buscar productos...">
         <ul>
-            <li><a href="/">Inicio</a></li>
+            
+            <li class="base_li"><a href="/" class="base_a">Inicio</a></li>
 
             
             {% if user.is_staff %}
-                <li><a href="{% url 'addStock' %}">Agregar producto</a></li>
+                <li class="base_li"><a href="{% url 'addStock' %}" class="base_a">Agregar producto</a></li>
             {% endif %}
-            <li><a href="{% url 'buy' %}">Comprar</a></li>
+                <li class="base_li"><a href="{% url 'buy' %}" class="base_a">Comprar</a></li>
             {% if user.is_authenticated %}
-                <li><a href="{% url 'logout' %}">Cerrar sesion</a></li>
+                <li class="base_li"><a href="{% url 'logout' %}" class="base_a">Cerrar sesion</a></li>
             {% else %}
-                <li><a href="{% url 'signup' %}">Registrarse</a></li>
-                <li><a href="{% url 'signin' %}">Iniciar Sesión</a></li>
+                <li class="base_li"><a href="{% url 'signup' %}" class="base_a">Registrarse</a></li>
+                <li class="base_li"><a href="{% url 'signin' %}" class="base_a">Iniciar Sesión</a></li>
             {% endif %}
-
+                <li class="base_li"><a href="" class="base_a"><i class='bx bx-cart'></i></a></li> 
             
             
             

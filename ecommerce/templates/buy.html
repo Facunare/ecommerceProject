@@ -1,15 +1,35 @@
 {% extends 'base.html' %}
+{% load static %}
 
-{% block content %}
-{% for product in products %}
-<form action="" method="POST">
-    {% csrf_token %}
-    <p>{{product}}</p>
-    <button>
-        Comprar
-    </button>
-</form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <title>Document</title>
+</head>
+<body>
+
     
-
-{% endfor %}
-{% endblock %}
+        {% block content %}
+        <main>
+            {% for product in products %}
+            <form action="" method="POST">
+                {% csrf_token %}
+                <p class="product">{{product}}</p>
+                <button>
+                    Comprar
+                </button>
+            </form>
+                
+        
+            {% endfor %}
+            
+        </main>
+        {% endblock %}
+   
+    
+</body>
+</html>
