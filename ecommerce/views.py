@@ -4,11 +4,11 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
-from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
-
-from .models import stockProducts
+from django.contrib.admin.views.decorators import staff_member_required
+from .models import stockProducts, categorias
 from . import forms
+from ecommerce import models
 
 # Create your views here.
 
@@ -63,7 +63,6 @@ def signin(request):
         
     
 @login_required
-@staff_member_required
 def addStock(request):
     if request.method == 'GET':
         return render(request, 'addProduct.html', {
@@ -71,10 +70,13 @@ def addStock(request):
         })
     else:
         print(request.POST)
-        stockProducts.objects.create(nom_prod=request.POST['nom_prod'], cant_prod=request.POST['cant_prod'], precio_prod=request.POST['precio_prod'])
+        print(models.categorias.objects.get(id=request.POST['categoria']))
+        stockProducts.objects.create(nom_prod=request.POST['nom_prod'], cant_prod=request.POST['cant_prod'], precio_prod=request.POST['precio_prod'], descripcion=request.POST['descripcion'],
+        categoria=models.categorias.objects.get(id=request.POST['categoria']))
         return redirect('/')
 
 @login_required
+@staff_member_required
 def buy(request):
     stock = stockProducts.objects.all()
     return render(request, 'buy.html', {
