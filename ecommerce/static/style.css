@@ -50,16 +50,25 @@ ul{
     background-color: rgba(0, 119, 255, 0.696);
 }
 
-main{
+ main{
     display: flex;
     justify-content: center;
     align-items: center;
     height: 89vh;
     flex-direction: column;
-}
+} 
 
 .product{
 
     font-size: 30px;
     margin-top: 30px;
 }
+
+form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    
+} 
