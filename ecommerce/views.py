@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
@@ -73,12 +73,29 @@ def addStock(request):
         print(models.categorias.objects.get(id=request.POST['categoria']))
         stockProducts.objects.create(nom_prod=request.POST['nom_prod'], cant_prod=request.POST['cant_prod'], precio_prod=request.POST['precio_prod'], descripcion=request.POST['descripcion'],
         categoria=models.categorias.objects.get(id=request.POST['categoria']))
-        return redirect('/')
+        return redirect('buy')
+
 
 @login_required
-@staff_member_required
 def buy(request):
+    busqueda = request.GET.get("buscar")
+
     stock = stockProducts.objects.all()
+
+    if busqueda:
+        stock = stockProducts.objects.filter(
+            nom_prod__icontains = busqueda
+        )
     return render(request, 'buy.html', {
         'products' : stock
     })
+
+@login_required 
+@staff_member_required
+def delete_prod(request, prod):
+    
+    product = get_object_or_404(stockProducts, nom_prod=prod)
+    if request.method == 'POST':
+        
+        product.delete()
+        return redirect('buy')

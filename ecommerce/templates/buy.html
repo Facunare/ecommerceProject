@@ -16,13 +16,21 @@
         {% block content %}
         <main>
             {% for product in products %}
-            <form action="" method="POST">
+            
+                
+            <p class="product">{{product}}</p>
+            <button>
+                Comprar
+            </button>
+            {% if user.is_staff %}
+            <form action="{% url 'delete_prod' product.nom_prod %}" method="POST">
                 {% csrf_token %}
-                <p class="product">{{product}}</p>
                 <button>
-                    Comprar
+                    Borrar
                 </button>
             </form>
+            {% endif %}
+           
                 
         
             {% endfor %}
