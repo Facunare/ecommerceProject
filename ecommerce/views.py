@@ -6,7 +6,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
-from .models import stockProducts, categorias
+from .models import stockProducts,  carrito
 from . import forms
 from ecommerce import models
 
@@ -71,8 +71,10 @@ def addStock(request):
     else:
         print(request.POST)
         print(models.categorias.objects.get(id=request.POST['categoria']))
-        stockProducts.objects.create(nom_prod=request.POST['nom_prod'], cant_prod=request.POST['cant_prod'], precio_prod=request.POST['precio_prod'], descripcion=request.POST['descripcion'],
+
+        stockProducts.objects.create(image_prod=request.POST['image_prod'], nom_prod=request.POST['nom_prod'], cant_prod=request.POST['cant_prod'], precio_prod=request.POST['precio_prod'], descripcion=request.POST['descripcion'],
         categoria=models.categorias.objects.get(id=request.POST['categoria']))
+
         return redirect('buy')
 
 
@@ -99,3 +101,24 @@ def delete_prod(request, prod):
         
         product.delete()
         return redirect('buy')
+
+def addCart(request, prod):
+    cantidad = request.GET.get("cant")
+    product = get_object_or_404(stockProducts, pk=prod)
+    
+    carrito.objects.create(nom_prod = product.nom_prod, cant_prod=int(cantidad), precio_prod = product.precio_prod*int(cantidad))
+    
+    return redirect('buy')
+
+def cart(request):
+    total = 0
+    prods = carrito.objects.all()
+    for prod in prods:
+        total += prod.precio_prod
+    print(total)
+    print(prods)
+    
+    return render(request, 'addToCart.html',{
+        'prods': prods,
+        'total': total
+    })

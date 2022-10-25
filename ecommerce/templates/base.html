@@ -24,6 +24,7 @@
                 <li class="base_li"><a href="{% url 'addStock' %}" class="base_a">Agregar producto</a></li>
             {% endif %}
                 <li class="base_li"><a href="{% url 'buy' %}" class="base_a">Comprar</a></li>
+                <li class="base_li"><a href="{% url 'cart' %}" class="base_a">Carrito</a></li>
             {% if user.is_authenticated %}
                 <li class="base_li"><a href="{% url 'logout' %}" class="base_a">Cerrar sesion</a></li>
             {% else %}
